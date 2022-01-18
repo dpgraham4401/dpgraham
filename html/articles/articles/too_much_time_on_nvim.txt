@@ -1,5 +1,0 @@
-I'm spending too much time maintaing Neovim. At the same time, there is no love lost for VS-code and all it's variants (sorry open source version). 
-GoLand and Pycharm are pretty dope (nice UI, relatively intuitive) but I only have them because my free student account licenses hasn't expired. After that, they just bloated, propiertary single-lang things that don't play well with a tiling window manager. 
-The vim extension/plugins just never quite give you the same feel, or just don't react as I would expect sometime and are just weird to have in a GUI anyways. 
-When I strayed from Vim and You-Complete-Me is when it all started to spiral out of control, so many broken plugins. It's like every 3 months you gotta overhaul and replace now unmaintained plugins.
-I don't know, I'll figure it out, maybe at the end of the day it's just better to have something that just gets out of your way and lets you get back what you're trying to do in the first place. 
