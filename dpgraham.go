@@ -1,7 +1,7 @@
 package main
 
 import (
-	"errors"
+	"fmt"
 	"html/template"
 	"strings"
 
@@ -9,7 +9,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"regexp"
 )
 
 type Page struct {
@@ -20,9 +19,12 @@ type Page struct {
 }
 
 func loadArticle(title string) (*Page, error) {
-	htmlDir := "./html/"
+	htmlDir := "./articles/"
 	filename := htmlDir + title + ".txt"
-	body, _ := os.ReadFile(filename)
+	body, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Println("error opening ", filename)
+	}
 	pageContent := Page{
 		Title: title,
 		Body:  body,
@@ -31,7 +33,7 @@ func loadArticle(title string) (*Page, error) {
 	return &pageContent, nil
 }
 
-func (p *Page) readArticles() error {
+func (p *Page) readArticleList() error {
 	dir := "./articles/"
 	f, _ := os.Open(dir)
 	files, _ := f.ReadDir(0)
@@ -45,14 +47,14 @@ func (p *Page) readArticles() error {
 func convertTitles(filename string) string {
 	filename = strings.ReplaceAll(filename, ".txt", "")
 	titleParts := strings.Split(filename, "_")
-	// fmt.Printf("%T\n", titleParts)
 	title := strings.Join(titleParts, " ")
 	return title
 }
 
 var templatePaths = []string{
 	"./html/index.html",
-	"./html/list.html",
+	"./html/blog_home.html",
+	"./html/article.html",
 }
 
 var templates = template.Must(template.ParseFiles(templatePaths...))
@@ -64,16 +66,16 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	}
 }
 
-var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
+// var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
-func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
-	m := validPath.FindStringSubmatch(r.URL.Path)
-	if m == nil {
-		http.NotFound(w, r)
-		return "", errors.New("invalid Page Title")
-	}
-	return m[2], nil
-}
+// func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
+// 	m := validPath.FindStringSubmatch(r.URL.Path)
+// 	if m == nil {
+// 		http.NotFound(w, r)
+// 		return "", errors.New("invalid Page Title")
+// 	}
+// 	return m[2], nil
+// }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	p, _ := loadArticle("home")
@@ -81,13 +83,15 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/blog" {
-		p, _ := loadArticle("home")
-		p.readArticles()
-		renderTemplate(w, "list", p)
+	if r.URL.Path == "/blog/" {
+		pBlank := Page{}
+		p := &pBlank
+		p.readArticleList()
+		renderTemplate(w, "blog_home", p)
 	} else {
-		p, _ := loadArticle("home")
-		renderTemplate(w, "list", p)
+		title := r.URL.Path[len("/blog/"):]
+		p, _ := loadArticle(title)
+		renderTemplate(w, "article", p)
 	}
 }
 
@@ -97,7 +101,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	mux.HandleFunc("/", homeHandler)
-	mux.HandleFunc("/blog", blogHandler)
+	mux.HandleFunc("/blog/", blogHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }

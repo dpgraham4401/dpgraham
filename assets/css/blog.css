@@ -1,0 +1,14 @@
+.article-list {
+    text-align: left;
+    padding-bottom: 100px;
+}
+
+.article-list, a {
+    margin-left:10px;   
+}
+
+li {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: 500;
+}

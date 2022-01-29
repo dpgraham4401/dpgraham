@@ -7,17 +7,17 @@
       <meta name="keywords" content="HTML, CSS">
       <meta name="author" content="dpgraham4401">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <link rel="shortcut icon" href="./assets/images/rubberplant_transbg.ico">
-      <link rel="stylesheet" type="text/css" href="./assets/css/base.css">
-      <link rel="stylesheet" type="text/css" href="./assets/css/responsive.css">
-      <link rel="stylesheet" type="text/css" href="./assets/css/blog.css">
+      <link rel="shortcut icon" href="../assets/images/rubberplant_transbg.ico">
+      <link rel="stylesheet" type="text/css" href="../assets/css/base.css">
+      <link rel="stylesheet" type="text/css" href="../assets/css/responsive.css">
+      <link rel="stylesheet" type="text/css" href="../assets/css/blog.css">
    </head>
    <body class="blog">
       <table class="doc-loader" style="display: none;">
          <tbody>
             <tr>
                <td>
-                  <img src="./assets/images/droplet.gif" alt="Loading...">
+                  <img src="../assets/images/droplet.gif" alt="Loading...">
                </td>
             </tr>
          </tbody>
@@ -38,7 +38,7 @@
                <ul class="navUL">
                  <li><a href="https://dpgraham.com">Home</a></li>
                  <li><a href="https://github.com">Projects</a></li>
-                 <li><a href="./blog">Blog</a></li>
+                 <li><a href="./blog_home.html">Blog</a></li>
                </ul>
             </div>
          </div>
@@ -46,44 +46,22 @@
          <div class="blog-top-content-holder relative">
             <div class="header-logo ">
                <a href="https://dpgraham.com">
-                  <img src="./assets/images/rubberplant_square_cropped_transparentbg.png" alt="Rubber Plant Co." class="rubberplant">
+                  <img src="../assets/images/rubberplant_square_cropped_transparentbg.png" alt="Rubber Plant Co." class="rubberplant">
                </a>
             </div>
             <div class="blog-top-content content-1170 center-relative center-text relative">
-                {{ if .Title }} 
-                <h1 class="entry-title">{{.Title}}</h1>
-                {{ else }}
-                <h1 class="entry-title">LemonGrab</h1>
-                {{ end }}
-                <p class="site-description italic">{{printf "%s" .Body}}</p>
-                <p class="site-description">- LemonGrab</p>
+                <ul class="article-list">
+                    {{ range .Articles }}
+                    <li><a href={{ printf "hello" }}></a> {{ printf "%s" . }} </li>
+                    {{ end }}
+                </ul>
+                <!-- <ul class="article-list">
+                    <li> <a href="./blog_home.html">hello</li></a>
+                    <li> <a href="./blog_home.html">it's me</li></a>
+                    <li> <a href="./blog_home.html">I was wondering if after all</li></a>
+                </ul> -->
             </div>
          </div>
-        <article id="post-1" class="blog-item-holder">
-         <div class="entry-content relative">
-             <div class="content-1170 center-relative center-text">
-                 <div class="entry-date">Month Day, Year</div>
-                 <h2 class="entry-title">
-                     <a href="./public/sept2721.html">
-                         Title of artlce will go here
-                     </a>
-                 </h2>
-                 <div class="entry-content">
-                  <p>Yo Yo! Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                     sed do eiusmod tempor incididunt ut labore et dolore 
-                     magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                     exercitation ullamco laboris nisi ut aliquip ex ea 
-                     commodo consequat. Duis aute irure dolor in reprehenderit 
-                     in voluptate velit esse cillum dolore eu fugiat nulla 
-                     pariatur. Excepteur sint occaecat cupidatat non proident, 
-                     sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                 </div>
-                 <div class="clear"></div>
-             </div>
-         </div>
-     </article>
-     <article>
-     </article>
       <footer class="footer">
          <div class="footer-list center-text">
             <ul>
