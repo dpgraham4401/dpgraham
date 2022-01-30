@@ -51,15 +51,10 @@
             </div>
             <div class="blog-top-content content-1170 center-relative center-text relative">
                 <ul class="article-list">
-                    {{ range .Articles }}
-                    <li><a href={{ printf "hello" }}></a> {{ printf "%s" . }} </li>
-                    {{ end }}
+                    {{ range .LinkList }}
+                    <li><a href="{{ printf "%s" .Link }}">{{ printf "%s" .Article }}</a></li>
+                   {{ end }}
                 </ul>
-                <!-- <ul class="article-list">
-                    <li> <a href="./blog_home.html">hello</li></a>
-                    <li> <a href="./blog_home.html">it's me</li></a>
-                    <li> <a href="./blog_home.html">I was wondering if after all</li></a>
-                </ul> -->
             </div>
          </div>
       <footer class="footer">

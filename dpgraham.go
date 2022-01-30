@@ -15,7 +15,12 @@ type Page struct {
 	Title    string
 	Body     []byte
 	Path     string
-	Articles []string
+	LinkList []Link
+}
+
+type Link struct {
+	Article string
+	Link    string
 }
 
 func loadArticle(title string) (*Page, error) {
@@ -38,17 +43,17 @@ func (p *Page) readArticleList() error {
 	f, _ := os.Open(dir)
 	files, _ := f.ReadDir(0)
 	for _, v := range files {
-		articleTitle := convertTitles(v.Name())
-		p.Articles = append(p.Articles, articleTitle)
+		articleTitle, link := convertTitles(v.Name())
+		p.LinkList = append(p.LinkList, Link{Article: articleTitle, Link: link})
 	}
 	return nil
 }
 
-func convertTitles(filename string) string {
+func convertTitles(filename string) (string, string) {
 	filename = strings.ReplaceAll(filename, ".txt", "")
 	titleParts := strings.Split(filename, "_")
 	title := strings.Join(titleParts, " ")
-	return title
+	return title, filename
 }
 
 var templatePaths = []string{
