@@ -213,6 +213,7 @@ ul.sub-menu
 
 .content-1170
 {
+    min-height: 500px;
     max-width: 1170px;
 }
 
@@ -408,6 +409,7 @@ ul.sub-menu
 
 .blog-top-content
 {
+    min-height: 500px;
     padding-bottom: 100px;
     z-index: 1;
 }
