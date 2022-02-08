@@ -90,7 +90,7 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fs := http.FileServer(http.Dir("/html/assets/"))
+	fs := http.FileServer(http.Dir("html/assets/"))
 
 	mux := http.NewServeMux()
 	mux.Handle("/html/assets/", http.StripPrefix("/html/assets/", fs))
