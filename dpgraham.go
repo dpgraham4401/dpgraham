@@ -71,17 +71,6 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	}
 }
 
-// var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
-
-// func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
-// 	m := validPath.FindStringSubmatch(r.URL.Path)
-// 	if m == nil {
-// 		http.NotFound(w, r)
-// 		return "", errors.New("invalid Page Title")
-// 	}
-// 	return m[2], nil
-// }
-
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	p, _ := loadArticle("home")
 	renderTemplate(w, "index", p)
@@ -101,10 +90,10 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fs := http.FileServer(http.Dir("assets"))
+	fs := http.FileServer(http.Dir("/html/assets/"))
 
 	mux := http.NewServeMux()
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	mux.Handle("/html/assets/", http.StripPrefix("/html/assets/", fs))
 	mux.HandleFunc("/", homeHandler)
 	mux.HandleFunc("/blog/", blogHandler)
 
