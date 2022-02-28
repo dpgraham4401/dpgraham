@@ -16,17 +16,30 @@ type Page struct {
 
 // Article for all things webpage
 type Article struct {
+	Page
 	Title    string
 	Body     []byte
 	Path     string
 	LinkList []Link
 }
 
-// Article to be used in article[]
+// Link to be used in article[]
 type Link struct {
 	Article string
 	Link    string
 }
+
+var templatePaths = []string{
+	"./html/index.html",
+	"./html/blog_home.html",
+	"./html/article.html",
+	"./articles/home.html",
+	"./articles/first_post.html",
+	"./articles/too_much_time_on_nvim.html",
+	"./articles/another_articles.html",
+}
+
+var templates = template.Must(template.ParseFiles(templatePaths...))
 
 func loadArticle(title string) (*Article, error) {
 	htmlDir := "./articles/"
@@ -60,18 +73,6 @@ func convertTitles(filename string) (string, string) {
 	title := strings.Join(titleParts, " ")
 	return title, filename
 }
-
-var templatePaths = []string{
-	"./html/index.html",
-	"./html/blog_home.html",
-	"./html/article.html",
-	"./articles/home.html",
-	"./articles/first_post.html",
-	"./articles/too_much_time_on_nvim.html",
-	"./articles/another_articles.html",
-}
-
-var templates = template.Must(template.ParseFiles(templatePaths...))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Article) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
