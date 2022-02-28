@@ -5,14 +5,17 @@ import (
 	"html/template"
 	"strings"
 
-	// "io/fs"
 	"log"
 	"net/http"
 	"os"
 )
 
-// Page for all things webpage
+// Page is an interface
 type Page struct {
+}
+
+// Article for all things webpage
+type Article struct {
 	Title    string
 	Body     []byte
 	Path     string
@@ -25,14 +28,14 @@ type Link struct {
 	Link    string
 }
 
-func loadArticle(title string) (*Page, error) {
+func loadArticle(title string) (*Article, error) {
 	htmlDir := "./articles/"
 	filename := htmlDir + title + ".html"
 	body, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println("error opening ", filename)
 	}
-	pageContent := Page{
+	pageContent := Article{
 		Title: title,
 		Body:  body,
 		Path:  htmlDir,
@@ -40,7 +43,7 @@ func loadArticle(title string) (*Page, error) {
 	return &pageContent, nil
 }
 
-func (p *Page) readArticleList() error {
+func (p *Article) readArticleList() error {
 	dir := "./articles/"
 	f, _ := os.Open(dir)
 	files, _ := f.ReadDir(0)
@@ -70,7 +73,7 @@ var templatePaths = []string{
 
 var templates = template.Must(template.ParseFiles(templatePaths...))
 
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
+func renderTemplate(w http.ResponseWriter, tmpl string, p *Article) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	err := templates.ExecuteTemplate(w, tmpl+".html", p)
 	if err != nil {
@@ -85,7 +88,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/blog/" {
-		pBlank := Page{}
+		pBlank := Article{}
 		p := &pBlank
 		p.readArticleList()
 		renderTemplate(w, "blog_home", p)
@@ -97,10 +100,12 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Static files and assets
 	fs := http.FileServer(http.Dir("html/assets/"))
-
 	mux := http.NewServeMux()
 	mux.Handle("/html/assets/", http.StripPrefix("/html/assets/", fs))
+
+	// Routing
 	mux.HandleFunc("/", homeHandler)
 	mux.HandleFunc("/blog/", blogHandler)
 
