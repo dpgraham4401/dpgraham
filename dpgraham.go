@@ -11,6 +11,7 @@ import (
 	"os"
 )
 
+// Page for all things webpage
 type Page struct {
 	Title    string
 	Body     []byte
@@ -18,6 +19,7 @@ type Page struct {
 	LinkList []Link
 }
 
+// Article to be used in article[]
 type Link struct {
 	Article string
 	Link    string
@@ -25,7 +27,7 @@ type Link struct {
 
 func loadArticle(title string) (*Page, error) {
 	htmlDir := "./articles/"
-	filename := htmlDir + title + ".txt"
+	filename := htmlDir + title + ".html"
 	body, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println("error opening ", filename)
@@ -50,7 +52,7 @@ func (p *Page) readArticleList() error {
 }
 
 func convertTitles(filename string) (string, string) {
-	filename = strings.ReplaceAll(filename, ".txt", "")
+	filename = strings.ReplaceAll(filename, ".html", "")
 	titleParts := strings.Split(filename, "_")
 	title := strings.Join(titleParts, " ")
 	return title, filename
@@ -60,11 +62,16 @@ var templatePaths = []string{
 	"./html/index.html",
 	"./html/blog_home.html",
 	"./html/article.html",
+	"./articles/home.html",
+	"./articles/first_post.html",
+	"./articles/too_much_time_on_nvim.html",
+	"./articles/another_articles.html",
 }
 
 var templates = template.Must(template.ParseFiles(templatePaths...))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	err := templates.ExecuteTemplate(w, tmpl+".html", p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
