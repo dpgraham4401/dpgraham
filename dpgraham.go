@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"strings"
 
@@ -10,16 +9,21 @@ import (
 	"os"
 )
 
-// Page is an interface
-type Page struct {
+// Page interface includes methods for all types of page content
+type Page interface {
+	LoadArticle()
+	renderTemplate()
 }
 
 // Article for all things webpage
 type Article struct {
-	Page
-	Title    string
-	Body     []byte
-	Path     string
+	Title string
+	Body  []byte
+	Path  string
+}
+
+// AricleList represents any page used for basic navigation
+type ArticleList struct {
 	LinkList []Link
 }
 
@@ -41,22 +45,20 @@ var templatePaths = []string{
 
 var templates = template.Must(template.ParseFiles(templatePaths...))
 
-func loadArticle(title string) (*Article, error) {
+func (Article *Article) loadArticle(title string) error {
 	htmlDir := "./articles/"
 	filename := htmlDir + title + ".html"
-	body, err := os.ReadFile(filename)
-	if err != nil {
-		fmt.Println("error opening ", filename)
-	}
-	pageContent := Article{
-		Title: title,
-		Body:  body,
-		Path:  htmlDir,
-	}
-	return &pageContent, nil
+	body, _ := os.ReadFile(filename)
+	Article.Body = body
+	// pageContent := Article{
+	// 	Title: title,
+	// 	Body:  body,
+	// 	Path:  htmlDir,
+	// }
+	// return &pageContent, nil
 }
 
-func (p *Article) readArticleList() error {
+func (p *ArticleList) readArticleList() error {
 	dir := "./articles/"
 	f, _ := os.Open(dir)
 	files, _ := f.ReadDir(0)
@@ -82,17 +84,12 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Article) {
 	}
 }
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-	p, _ := loadArticle("home")
-	renderTemplate(w, "index", p)
-}
-
 func blogHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/blog/" {
-		pBlank := Article{}
-		p := &pBlank
-		p.readArticleList()
-		renderTemplate(w, "blog_home", p)
+		var articleList ArticleList
+		// p := &articleList
+		articleList.readArticleList()
+		// renderTemplate(w, "blog_home", &articleList)
 	} else {
 		title := r.URL.Path[len("/blog/"):]
 		p, _ := loadArticle(title)
@@ -107,7 +104,6 @@ func main() {
 	mux.Handle("/html/assets/", http.StripPrefix("/html/assets/", fs))
 
 	// Routing
-	mux.HandleFunc("/", homeHandler)
 	mux.HandleFunc("/blog/", blogHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
