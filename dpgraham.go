@@ -9,30 +9,6 @@ import (
 	"os"
 )
 
-// Page interface includes methods for all types of page content
-type Page interface {
-	LoadArticle()
-	renderTemplate()
-}
-
-// Article for all things webpage
-type Article struct {
-	Title string
-	Body  []byte
-	Path  string
-}
-
-// AricleList represents any page used for basic navigation
-type ArticleList struct {
-	LinkList []Link
-}
-
-// Link to be used in article[]
-type Link struct {
-	Article string
-	Link    string
-}
-
 var templatePaths = []string{
 	"./html/index.html",
 	"./html/blog_home.html",
@@ -45,26 +21,47 @@ var templatePaths = []string{
 
 var templates = template.Must(template.ParseFiles(templatePaths...))
 
-func (Article *Article) loadArticle(title string) error {
+// Article for all things webpage
+type Article struct {
+	Title string
+	Body  []byte
+	Path  string
+}
+
+// ArticleList represents any page used for basic navigation
+type ArticleList struct {
+	LinkList []Link
+}
+
+// Link to be used in article[]
+type Link struct {
+	Article string
+	Link    string
+}
+
+// Page interface includes methods for all types of page content
+type Page interface {
+	loadContent()
+	renderTemplate()
+}
+
+func (article *Article) loadContent(title string) error {
 	htmlDir := "./articles/"
 	filename := htmlDir + title + ".html"
 	body, _ := os.ReadFile(filename)
-	Article.Body = body
-	// pageContent := Article{
-	// 	Title: title,
-	// 	Body:  body,
-	// 	Path:  htmlDir,
-	// }
-	// return &pageContent, nil
+	article.Body = body
+	article.Title = title
+	article.Path = htmlDir
+	return nil
 }
 
-func (p *ArticleList) readArticleList() error {
+func (articleList *ArticleList) loadContent() error {
 	dir := "./articles/"
 	f, _ := os.Open(dir)
 	files, _ := f.ReadDir(0)
 	for _, v := range files {
 		articleTitle, link := convertTitles(v.Name())
-		p.LinkList = append(p.LinkList, Link{Article: articleTitle, Link: link})
+		articleList.LinkList = append(articleList.LinkList, Link{Article: articleTitle, Link: link})
 	}
 	return nil
 }
@@ -76,9 +73,17 @@ func convertTitles(filename string) (string, string) {
 	return title, filename
 }
 
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Article) {
+func (article *Article) renderTemplate(w http.ResponseWriter, tmpl string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	err := templates.ExecuteTemplate(w, tmpl+".html", p)
+	err := templates.ExecuteTemplate(w, tmpl+".html", article)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func (articleList *ArticleList) renderTemplate(w http.ResponseWriter, tmpl string) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	err := templates.ExecuteTemplate(w, tmpl+".html", articleList)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -86,14 +91,13 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Article) {
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/blog/" {
-		var articleList ArticleList
-		// p := &articleList
-		articleList.readArticleList()
-		// renderTemplate(w, "blog_home", &articleList)
+		var content ArticleList
+		content.loadContent()
+		content.renderTemplate(w, "blog_home")
 	} else {
-		title := r.URL.Path[len("/blog/"):]
-		p, _ := loadArticle(title)
-		renderTemplate(w, "article", p)
+		var content Article
+		content.loadContent(r.URL.Path[len("/blog/"):])
+		content.renderTemplate(w, "article")
 	}
 }
 
