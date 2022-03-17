@@ -24,7 +24,7 @@ type Link struct {
 }
 
 func loadArticle(title string) (*Page, error) {
-	htmlDir := "./articles/"
+	htmlDir := "./blog/articles/"
 	filename := htmlDir + title + ".txt"
 	body, err := os.ReadFile(filename)
 	if err != nil {
@@ -39,7 +39,7 @@ func loadArticle(title string) (*Page, error) {
 }
 
 func (p *Page) readArticleList() error {
-	dir := "./articles/"
+	dir := "./blog/articles/"
 	f, _ := os.Open(dir)
 	files, _ := f.ReadDir(0)
 	for _, v := range files {
@@ -57,9 +57,9 @@ func convertTitles(filename string) (string, string) {
 }
 
 var templatePaths = []string{
-	"./html/index.html",
-	"./html/blog_home.html",
-	"./html/article.html",
+	"./templates/index.html",
+	"./templates/blog_home.html",
+	"./templates/article.html",
 }
 
 var templates = template.Must(template.ParseFiles(templatePaths...))
@@ -101,10 +101,10 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fs := http.FileServer(http.Dir("assets"))
+	fs := http.FileServer(http.Dir("static"))
 
 	mux := http.NewServeMux()
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 	mux.HandleFunc("/", homeHandler)
 	mux.HandleFunc("/blog/", blogHandler)
 
