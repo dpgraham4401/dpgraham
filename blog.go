@@ -1,15 +1,45 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
-	"strings"
-
-	// "io/fs"
-	"log"
+	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
+
+// Article captures metadata about a blog post or tutorial etc.
+type Article struct {
+	Title      string  `json:"title"`
+	LastUpdate string  `json:"lastUpdate"`
+	Date       string  `json:"date"`
+	Publish    bool    `json:"publish"`
+	Type       string  `json:"type"`
+	Content    content `json:"content"`
+}
+
+// content captures information on the storage of an article content
+type content struct {
+	Body   []byte
+	Path   string `json:"path"`
+	Format string `json:"format"`
+}
+
+func loadArticles() []Article {
+	var allArticles []Article
+	articlePath := "./blog/entries/"
+	articleDir, _ := os.Open(articlePath)
+	files, _ := articleDir.ReadDir(0)
+	for _, v := range files {
+		var newArticle Article
+		file, _ := ioutil.ReadFile(articlePath + v.Name())
+		_ = json.Unmarshal([]byte(file), &newArticle)
+		allArticles = append(allArticles, newArticle)
+	}
+	return allArticles
+}
 
 type Page struct {
 	Title    string
@@ -69,44 +99,4 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-}
-
-// var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
-
-// func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
-// 	m := validPath.FindStringSubmatch(r.URL.Path)
-// 	if m == nil {
-// 		http.NotFound(w, r)
-// 		return "", errors.New("invalid Page Title")
-// 	}
-// 	return m[2], nil
-// }
-
-func homeHandler(w http.ResponseWriter, r *http.Request) {
-	p, _ := loadArticle("home")
-	renderTemplate(w, "index", p)
-}
-
-func blogHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/blog/" {
-		pBlank := Page{}
-		p := &pBlank
-		p.readArticleList()
-		renderTemplate(w, "blog_home", p)
-	} else {
-		title := r.URL.Path[len("/blog/"):]
-		p, _ := loadArticle(title)
-		renderTemplate(w, "article", p)
-	}
-}
-
-func main() {
-	fs := http.FileServer(http.Dir("assets"))
-
-	mux := http.NewServeMux()
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	mux.HandleFunc("/", homeHandler)
-	mux.HandleFunc("/blog/", blogHandler)
-
-	log.Fatal(http.ListenAndServe(":8080", mux))
 }

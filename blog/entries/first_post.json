@@ -1,0 +1,11 @@
+{
+    "title": "First post",
+    "lastUpdate": "05-01-2022",
+    "date": "01-01-2022",
+    "publish": "true",
+    "type": "blog",
+    "content": {
+        "path": "first_post",
+        "format": "text"
+    }
+}
