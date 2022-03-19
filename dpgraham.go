@@ -101,10 +101,10 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fs := http.FileServer(http.Dir("static"))
+	fs := http.FileServer(http.Dir("assets"))
 
 	mux := http.NewServeMux()
-	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	mux.HandleFunc("/", homeHandler)
 	mux.HandleFunc("/blog/", blogHandler)
 
