@@ -54,6 +54,24 @@ func (a ArticleList) renderTemplate(w http.ResponseWriter, tmpl string) {
 	}
 }
 
+func (a content) renderTemplate(w http.ResponseWriter, tmpl string) {
+	err := templates.ExecuteTemplate(w, tmpl+".html", a)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func loadContent(title string) (*content, error) {
+	htmlDir := "./blog/articles/"
+	filename := htmlDir + title + ".txt"
+	body, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Println("error opening ", filename)
+	}
+	pageContent := content{body, title, "html"}
+	return &pageContent, nil
+}
+
 type Page struct {
 	Title    string
 	Body     []byte

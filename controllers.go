@@ -14,8 +14,8 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 		allArticles := loadArticles()
 		allArticles.renderTemplate(w, "blog_home")
 	} else {
-		title := r.URL.Path[len("/blog/"):]
-		p, _ := loadArticle(title)
-		renderTemplate(w, "article", p)
+		url := r.URL.Path[len("/blog/"):]
+		content, _ := loadContent(url)
+		content.renderTemplate(w, "article")
 	}
 }
