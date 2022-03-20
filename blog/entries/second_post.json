@@ -4,6 +4,7 @@
     "date": "03-02-2022",
     "publish": "true",
     "type": "blog",
+    "url": "second_post",
     "content": {
         "path": "second_post",
         "format": "text"
