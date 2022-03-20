@@ -28,9 +28,10 @@ type Article struct {
 
 // content captures information on the storage of an article content
 type content struct {
-	Body   []byte
-	Path   string `json:"path"`
-	Format string `json:"format"`
+	Body     []byte
+	Path     string `json:"path"`
+	Format   string `json:"format"`
+	BodyHTML template.HTML
 }
 
 func loadArticles() ArticleList {
@@ -65,10 +66,11 @@ func loadContent(title string) (*content, error) {
 	htmlDir := "./blog/articles/"
 	filename := htmlDir + title + ".txt"
 	body, err := os.ReadFile(filename)
+	bodyHTML := template.HTML(body)
 	if err != nil {
 		fmt.Println("error opening ", filename)
 	}
-	pageContent := content{body, title, "html"}
+	pageContent := content{body, title, "html", bodyHTML}
 	return &pageContent, nil
 }
 
