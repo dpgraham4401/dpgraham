@@ -10,6 +10,13 @@ import (
 	"strings"
 )
 
+// ArticleList is loaded at runtime and contiains slice of articles
+type ArticleList struct {
+	Title     []string `json:"title"`
+	Link      []string `json:"path"`
+	articless []Article
+}
+
 // Article captures metadata about a blog post or tutorial etc.
 type Article struct {
 	Title      string  `json:"title"`
@@ -27,8 +34,8 @@ type content struct {
 	Format string `json:"format"`
 }
 
-func loadArticles() []Article {
-	var allArticles []Article
+func loadArticles() ArticleList {
+	var allArticles ArticleList
 	articlePath := "./blog/entries/"
 	articleDir, _ := os.Open(articlePath)
 	files, _ := articleDir.ReadDir(0)
@@ -36,7 +43,9 @@ func loadArticles() []Article {
 		var newArticle Article
 		file, _ := ioutil.ReadFile(articlePath + v.Name())
 		_ = json.Unmarshal([]byte(file), &newArticle)
-		allArticles = append(allArticles, newArticle)
+		allArticles.Title = append(allArticles.Title, newArticle.Title)
+		allArticles.Link = append(allArticles.Link, newArticle.Title)
+		allArticles.articless = append(allArticles.articless, newArticle)
 	}
 	return allArticles
 }
@@ -96,6 +105,13 @@ var templates = template.Must(template.ParseFiles(templatePaths...))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	err := templates.ExecuteTemplate(w, tmpl+".html", p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func (a *ArticleList) renderTemplate(w http.ResponseWriter, tmpl string) {
+	err := templates.ExecuteTemplate(w, tmpl+".html", a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

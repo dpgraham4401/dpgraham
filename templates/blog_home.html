@@ -51,8 +51,8 @@
             </div>
             <div class="blog-top-content content-1170 center-relative center-text relative">
                 <ul class="article-list">
-                    {{ range .LinkList }}
-                    <li><a href="{{ printf "%s" .Link }}">{{ printf "%s" .Article }}</a></li>
+                    {{ range .Title }}
+                    <li><a href="{{ printf "%s" . }}">{{ printf "%s" . }}</a></li>
                    {{ end }}
                 </ul>
             </div>

@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	p, _ := loadArticle("home")
@@ -9,10 +12,16 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/blog/" {
-		pBlank := Page{}
-		p := &pBlank
-		p.readArticleList()
-		renderTemplate(w, "blog_home", p)
+		allArticles := loadArticles()
+		for _, i := range allArticles.Title {
+			fmt.Println(i)
+		}
+		allArticles.renderTemplate(w, "blog_home")
+		// fmt.Println(allArticles.articless)
+		// pBlank := Page{}
+		// p := &pBlank
+		// p.readArticleList()
+		// renderTemplate(w, "blog_home", p)
 	} else {
 		title := r.URL.Path[len("/blog/"):]
 		p, _ := loadArticle(title)
