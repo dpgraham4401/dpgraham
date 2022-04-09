@@ -56,12 +56,12 @@
                             <div class="content-1170 center-relative center-text">
                                 <div class="entry-date">{{ .Date }}</div>
                                 <h2 class="entry-title">
-                                    <a href="./public/sept2721.html">
+                                    <a href="/blog/{{ .URL }}">
                                         {{ .Title }}
                                     </a>
                                 </h2>
                                 <div class="entry-content">
-                                    <p>{{ .Content.BodyHTML }}</p>
+                                    <p>{{ slice .Content.BodyHTML 0 }}...</p>
                                 </div>
                                 <div class="clear"></div>
                             </div>
