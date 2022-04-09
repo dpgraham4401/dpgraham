@@ -1,15 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 )
-
-func printOrder(list ArticleList) {
-	for _, i := range list.Articles {
-		fmt.Printf("%s: %d\n", i.Title, i.Id)
-	}
-}
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	allArticles := loadArticles()
@@ -17,7 +10,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	for i, _ := range allArticles.Articles {
 		allArticles.Articles[i].loadContent()
 	}
-	printOrder(allArticles)
 	allArticles.renderTemplate(w, "index")
 }
 
