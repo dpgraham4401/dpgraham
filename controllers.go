@@ -13,6 +13,10 @@ func printOrder(list ArticleList) {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	allArticles := loadArticles()
+	allArticles.Articles = allArticles.Articles[:3]
+	for i, _ := range allArticles.Articles {
+		allArticles.Articles[i].loadContent()
+	}
 	printOrder(allArticles)
 	allArticles.renderTemplate(w, "index")
 }
