@@ -1,4 +1,13 @@
-Hey everyone! this is really just a proof of concept at this point
-but if i was going to write something, it would have to longer than a certain amount to so
-could visualize that and see how it would be displayed on the homepage when I
-truncate it to 200 characters
+<p>Hey everyone! I guess this is the first post, the neovim one doesn't count because it was published pre-v0.0.1.
+    That's what I just keep telling myself.
+</p>
+<p>I don't have much to say, I really just wanted to learn how to put something together with the
+    <a href="https://go.dev/">Go Programming Language</a> standard library and deploying to a certified k8 distribution like
+    <a href="https://k3s.io/">K3s</a> on my home arm64 based custer. I'll describe that in a later post :)
+</p>
+<p>
+    I also don't have a solid plan for this website... other than keep it simple place to showcase my experience and
+    resume, fun, and a place for me to learn by doing.. Maybe some dad-joke apis, bootstrap styling, maybe some frontend javascript? 
+    I don't know! We'll see where the wind takes us.
+</p>
+
