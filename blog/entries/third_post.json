@@ -1,12 +1,12 @@
 {
-    "title": "Third post",
+    "title": "Third Post",
     "lastUpdate": "15-02-2022",
-    "date": "03-02-2022",
+    "date": "04-06-2022",
     "publish": "true",
     "type": "blog",
     "url": "third_post",
     "content": {
         "path": "third_post",
-        "format": "text"
+        "format": "html"
     }
 }

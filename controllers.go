@@ -10,12 +10,18 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {
+	allArticles := loadArticles()
+	var art Article
 	if r.URL.Path == "/blog/" {
-		allArticles := loadArticles()
 		allArticles.renderTemplate(w, "blog_home")
 	} else {
 		url := r.URL.Path[len("/blog/"):]
-		content, _ := loadContent(url)
-		content.renderTemplate(w, "article")
+		for i, article := range allArticles.Articles {
+			if article.URL == url {
+				art = allArticles.Articles[i]
+			}
+		}
+		art.loadContent()
+		art.Content.renderTemplate(w, "article")
 	}
 }
