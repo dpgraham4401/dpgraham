@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"sort"
 )
 
 var templatePaths = []string{
@@ -23,6 +24,7 @@ type ArticleList struct {
 
 // Article captures metadata about a blog post or tutorial etc.
 type Article struct {
+	Id         int     `json:"id"`
 	Title      string  `json:"title"`
 	LastUpdate string  `json:"lastUpdate"`
 	Date       string  `json:"date"`
@@ -52,6 +54,9 @@ func loadArticles() ArticleList {
 		_ = json.Unmarshal([]byte(file), &newArticle)
 		allArticles.Articles = append(allArticles.Articles, newArticle)
 	}
+	sort.Slice(allArticles.Articles, func(i, j int) bool {
+		return allArticles.Articles[i].Id > allArticles.Articles[j].Id
+	})
 	return allArticles
 }
 
