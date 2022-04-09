@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -75,38 +74,4 @@ func (a *Article) loadContent() {
 	fileName := contentDir + a.Content.Path
 	a.Content.Body, _ = os.ReadFile(fileName)
 	a.Content.BodyHTML = template.HTML(a.Content.Body)
-}
-
-type Page struct {
-	Title    string
-	Body     []byte
-	Path     string
-	LinkList []Link
-}
-
-type Link struct {
-	Article string
-	Link    string
-}
-
-func loadArticle(title string) (*Page, error) {
-	htmlDir := "./blog/articles/"
-	filename := htmlDir + title + ".txt"
-	body, err := os.ReadFile(filename)
-	if err != nil {
-		fmt.Println("error opening ", filename)
-	}
-	pageContent := Page{
-		Title: title,
-		Body:  body,
-		Path:  htmlDir,
-	}
-	return &pageContent, nil
-}
-
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	err := templates.ExecuteTemplate(w, tmpl+".html", p)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
 }

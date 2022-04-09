@@ -5,8 +5,8 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	p, _ := loadArticle("home")
-	renderTemplate(w, "index", p)
+	allArticles := loadArticles()
+	allArticles.renderTemplate(w, "index")
 }
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {

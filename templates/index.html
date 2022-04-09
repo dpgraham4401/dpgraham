@@ -50,40 +50,26 @@
                </a>
             </div>
             <div class="blog-top-content content-1170 center-relative center-text relative">
-                {{ if .Title }} 
-                <h1 class="entry-title">{{.Title}}</h1>
-                {{ else }}
-                <h1 class="entry-title">LemonGrab</h1>
+                {{ range .Articles }}
+                    <article id="post-{{ .Title }}" class="blog-item-holder">
+                        <div class="entry-content relative">
+                            <div class="content-1170 center-relative center-text">
+                                <div class="entry-date">{{ .Date }}</div>
+                                <h2 class="entry-title">
+                                    <a href="./public/sept2721.html">
+                                        {{ .Title }}
+                                    </a>
+                                </h2>
+                                <div class="entry-content">
+                                    <p>article preview</p>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </article>
                 {{ end }}
-                <p class="site-description italic">{{printf "%s" .Body}}</p>
-                <p class="site-description">- LemonGrab</p>
             </div>
          </div>
-        <article id="post-1" class="blog-item-holder">
-         <div class="entry-content relative">
-             <div class="content-1170 center-relative center-text">
-                 <div class="entry-date">Month Day, Year</div>
-                 <h2 class="entry-title">
-                     <a href="./public/sept2721.html">
-                         Title of artlce will go here
-                     </a>
-                 </h2>
-                 <div class="entry-content">
-                  <p>Yo Yo! Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                     sed do eiusmod tempor incididunt ut labore et dolore 
-                     magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                     exercitation ullamco laboris nisi ut aliquip ex ea 
-                     commodo consequat. Duis aute irure dolor in reprehenderit 
-                     in voluptate velit esse cillum dolore eu fugiat nulla 
-                     pariatur. Excepteur sint occaecat cupidatat non proident, 
-                     sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                 </div>
-                 <div class="clear"></div>
-             </div>
-         </div>
-     </article>
-     <article>
-     </article>
       <footer class="footer">
          <div class="footer-list center-text">
             <ul>
