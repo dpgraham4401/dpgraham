@@ -20,4 +20,5 @@ func TestHomeHandler(t *testing.T) {
 	if string(data)[:15] != "<!DOCTYPE html>" {
 		t.Errorf("expected <!DOCTYPE html> got %v", string(data))
 	}
+
 }
