@@ -10,10 +10,10 @@ import (
 )
 
 var templatePaths = []string{
-	"./templates/index.gotmpl",
-	"./templates/blog_home.gotmpl",
-	"./templates/article.gotmpl",
-	"./templates/base.gotmpl",
+	"./views/index.gotmpl",
+	"./views/blog_home.gotmpl",
+	"./views/article.gotmpl",
+	"./views/base.gotmpl",
 }
 
 var templates = template.Must(template.ParseFiles(templatePaths...))
@@ -61,15 +61,15 @@ func loadArticles() ArticleList {
 	return allArticles
 }
 
-func (a ArticleList) renderTemplate(w http.ResponseWriter, tmpl string) {
-	err := templates.ExecuteTemplate(w, tmpl+".gotmpl", a)
+func (a ArticleList) renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
+	err := tmpl.ExecuteTemplate(w, "base", a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func (a Content) renderTemplate(w http.ResponseWriter, tmpl string) {
-	err := templates.ExecuteTemplate(w, tmpl+".gotmpl", a)
+func (a Content) renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
+	err := templates.ExecuteTemplate(w, "base", a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

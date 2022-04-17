@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/dpgrahm4401/dpgraham.com/views"
 	"net/http"
 )
 
@@ -10,14 +11,15 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	for i, _ := range allArticles.Articles {
 		allArticles.Articles[i].loadContent()
 	}
-	allArticles.renderTemplate(w, "index")
+	view := views.Index
+	allArticles.renderTemplate(w, view)
 }
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {
 	allArticles := loadArticles()
 	var art Article
 	if r.URL.Path == "/blog/" {
-		allArticles.renderTemplate(w, "blog_home")
+		allArticles.renderTemplate(w, views.Blogs)
 	} else {
 		url := r.URL.Path[len("/blog/"):]
 		for i, article := range allArticles.Articles {
@@ -26,6 +28,6 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		art.loadContent()
-		art.Content.renderTemplate(w, "article")
+		art.Content.renderTemplate(w, views.Blog)
 	}
 }
