@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/dpgrahm4401/dpgraham.com/views"
+	"github.com/dpgrahm4401/dpgraham/views"
 	"net/http"
 )
 
