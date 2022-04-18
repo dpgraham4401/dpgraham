@@ -9,14 +9,6 @@ import (
 	"sort"
 )
 
-var templatePaths = []string{
-	"./templates/index.html",
-	"./templates/blog_home.html",
-	"./templates/article.html",
-}
-
-var templates = template.Must(template.ParseFiles(templatePaths...))
-
 // ArticleList is loaded at runtime and contains slice of articles
 type ArticleList struct {
 	Articles []Article
@@ -60,15 +52,15 @@ func loadArticles() ArticleList {
 	return allArticles
 }
 
-func (a ArticleList) renderTemplate(w http.ResponseWriter, tmpl string) {
-	err := templates.ExecuteTemplate(w, tmpl+".html", a)
+func (a ArticleList) renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
+	err := tmpl.ExecuteTemplate(w, "base", a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func (a Content) renderTemplate(w http.ResponseWriter, tmpl string) {
-	err := templates.ExecuteTemplate(w, tmpl+".html", a)
+func (a Content) renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
+	err := tmpl.ExecuteTemplate(w, "base", a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

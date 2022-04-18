@@ -1,0 +1,30 @@
+         {{ define "main" }}
+         <div class="blog-top-content-holder relative">
+            <div class="header-logo ">
+               <a href="https://dpgraham.com">
+                  <img src="../assets/images/rubberplant_square_cropped_transparentbg.png" alt="Rubber Plant Co." class="rubberplant">
+               </a>
+            </div>
+            <div class="blog-top-content content-1170 center-relative center-text relative">
+                {{ range .Articles }}
+                    <article id="post-{{ .Title }}" class="blog-item-holder">
+                        <div class="entry-content relative">
+                            <div class="content-1170 center-relative center-text">
+                                <div class="entry-date">{{ .Date }}</div>
+                                <h2 class="entry-title">
+                                    <a href="/blog/{{ .URL }}">
+                                        {{ .Title }}
+                                    </a>
+                                </h2>
+                                <div class="entry-content">
+                                    <p>{{ slice .Content.BodyHTML 0 200 }}...</p>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </article>
+                {{ end }}
+            </div>
+         </div>
+{{ end }}
+

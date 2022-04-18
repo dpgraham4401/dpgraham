@@ -1,3 +1,3 @@
-module github.com/dpgrahm4401/dpgraham.com
+module github.com/dpgrahm4401/dpgraham
 
 go 1.16
