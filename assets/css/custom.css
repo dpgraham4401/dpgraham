@@ -1,0 +1,12 @@
+.teal-link {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.teal-link:hover {
+    color: rgba(30, 175, 168) !important;
+}
+
+.logo {
+    background-image: linear-gradient(#1fafa8, #0d8d86);
+}

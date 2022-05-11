@@ -3,13 +3,13 @@ package views
 import "html/template"
 
 var Index = template.Must(template.ParseFiles(
-	"./views/base.gotmpl",
-	"./views/index.gotmpl"))
+	"./views/base.gohtml",
+	"./views/index.gohtml"))
 
 var Blogs = template.Must(template.ParseFiles(
-	"./views/base.gotmpl",
-	"./views/blog_home.gotmpl"))
+	"./views/base.gohtml",
+	"./views/blog_home.gohtml"))
 
 var Blog = template.Must(template.ParseFiles(
-	"./views/base.gotmpl",
-	"./views/article.gotmpl"))
+	"./views/base.gohtml",
+	"./views/article.gohtml"))

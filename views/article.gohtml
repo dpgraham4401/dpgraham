@@ -1,0 +1,20 @@
+{{ define "main" }}
+  <div class="container">
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <a href="https://dpgraham.com">
+          <img src="../assets/img/rubberplant_square_cropped_transparentbg.png"
+               alt="Rubber Plant Co."
+               class="logo rounded-circle bg-danger" height="150" width="150">
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="text-white">
+          <p>{{ .BodyHTML }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

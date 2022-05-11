@@ -1,0 +1,31 @@
+{{ define "main" }}
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <a href="https://dpgraham.com">
+        <img src="../assets/img/rubberplant_square_cropped_transparentbg.png"
+             alt="Rubber Plant Co."
+             class="logo rounded-circle bg-danger" height="150" width="150">
+      </a>
+    </div>
+  </div>
+  <div class="">
+      {{ range .Articles }}
+        <article id="post-{{ .Title }}" class="row mb-3">
+          <div class="col">
+            <div class="m-5">
+              <h2 class="m-0 teal-link">
+                <a class="text-white teal-link" href="/blog/{{ .URL }}">
+                    {{ .Title }}
+                </a>
+              </h2>
+              <div class="mb-3 mt-0">{{ .Date }}</div>
+              <div class="text-white">
+                <p class="text-white">{{ slice .Content.BodyHTML 0 200 }}...</p>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </article>
+      {{ end }}
+  </div>
+{{ end }}
