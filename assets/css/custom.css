@@ -10,3 +10,12 @@
 .logo {
     background-image: linear-gradient(#1fafa8, #0d8d86);
 }
+
+a {
+    color: #1fafa8;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #AF1F26;
+}
