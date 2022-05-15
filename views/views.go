@@ -13,3 +13,7 @@ var Blogs = template.Must(template.ParseFiles(
 var Blog = template.Must(template.ParseFiles(
 	"./views/base.gohtml",
 	"./views/article.gohtml"))
+
+var Error = template.Must(template.ParseFiles(
+	"./views/base.gohtml",
+	"./views/error.gohtml"))

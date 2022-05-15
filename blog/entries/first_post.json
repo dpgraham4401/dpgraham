@@ -1,13 +1,13 @@
 {
-    "id": 1,
-    "title": "First Post",
-    "lastUpdate": "05-01-2022",
-    "date": "01-01-2022",
-    "publish": "true",
-    "type": "blog",
-    "url": "first_post",
-    "content": {
-        "path": "first_post",
-        "format": "text"
-    }
+  "id": 1,
+  "title": "First Post",
+  "lastUpdate": "05-01-2022",
+  "date": "01-01-2022",
+  "publish": true,
+  "type": "blog",
+  "url": "first_post",
+  "content": {
+    "path": "first_post",
+    "format": "text"
+  }
 }

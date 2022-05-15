@@ -1,13 +1,13 @@
 {
-    "id": 4,
-    "title": "Too much time on Neovim",
-    "lastUpdate": "04-07-2022",
-    "date": "04-07-2022",
-    "publish": "true",
-    "type": "blog",
-    "url": "too_much_time_nvim",
-    "content": {
-        "path": "too_much_time_nvim",
-        "format": "html"
-    }
+  "id": 3,
+  "title": "Too much time on Neovim",
+  "lastUpdate": "04-07-2022",
+  "date": "04-07-2022",
+  "publish": true,
+  "type": "blog",
+  "url": "too_much_time_nvim",
+  "content": {
+    "path": "too_much_time_nvim",
+    "format": "html"
+  }
 }
