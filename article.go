@@ -52,6 +52,7 @@ func loadArticles() ArticleList {
 	return allArticles
 }
 
+// there's probably a better way to do this using interfaces
 func (a ArticleList) renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
 	err := tmpl.ExecuteTemplate(w, "base", a)
 	if err != nil {

@@ -1,0 +1,37 @@
+{{ define "main" }}
+  <div class="container">
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <a href="https://dpgraham.com">
+          <img src="../assets/img/rubberplant_square_cropped_transparentbg.png"
+               alt="Rubber Plant Co."
+               class="logo rounded-circle bg-gradient" height="150" width="150"
+               style="background-color: #1fafa8">
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+
+        <div class="row justify-content-center">
+          <div class="col-sm">
+            <div class="card shadow-lg border-0 rounded-lg mt-5 mx-auto">
+              <h3 class="display-1 text-muted text-center">
+                  {{ .Code }}
+              </h3>
+
+              <span class="card-subtitle mb-2 text-muted text-center">
+                {{ .Message }}
+            </span>
+
+              <div class="card-body mx-auto">
+                <a type="button" href="https://dpgraham.com"
+                   class="btn btn-sm btn-info text-white"> Back To Home </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}
