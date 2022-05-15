@@ -85,11 +85,6 @@ ipython_config.py
 # pipenv
 Pipfile.lock
 
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-
 # Environments
 .env
 .venv
@@ -99,19 +94,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
+# MacOS
+.DS_Store
+*/.DS_Store
