@@ -3,7 +3,6 @@
 
 # Misc
 .dockerignore
-release.sh
 
 # Git
 .github

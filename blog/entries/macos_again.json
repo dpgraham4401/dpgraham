@@ -7,7 +7,7 @@
   "type": "blog",
   "url": "macos_again",
   "content": {
-    "path": "macos_again",
+    "path": "macos_again.gohtml",
     "format": "text"
   }
 }

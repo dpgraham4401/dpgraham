@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/dpgrahm4401/dpgraham/views"
+	"github.com/microcosm-cc/bluemonday"
+	"html/template"
 	"net/http"
 )
 
@@ -20,6 +22,11 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		allArticles.Articles = allArticles.Articles[:3]
 		for i := range allArticles.Articles {
 			allArticles.Articles[i].loadContent()
+		}
+		p := bluemonday.StripTagsPolicy()
+		for i := range allArticles.Articles {
+			stringTest := p.Sanitize(string(allArticles.Articles[i].Content.BodyHTML))
+			allArticles.Articles[i].Content.BodyHTML = template.HTML(stringTest)
 		}
 		view := views.Index
 		allArticles.renderTemplate(w, view)
@@ -45,7 +52,7 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 			errorHandler(w, http.StatusNotFound)
 		} else {
 			art.loadContent()
-			art.Content.renderTemplate(w, views.Blog)
+			art.renderTemplate(w, views.Blog)
 		}
 	}
 }
