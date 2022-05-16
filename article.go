@@ -60,7 +60,7 @@ func (a ArticleList) renderTemplate(w http.ResponseWriter, tmpl *template.Templa
 	}
 }
 
-func (a Content) renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
+func (a Article) renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
 	err := tmpl.ExecuteTemplate(w, "base", a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

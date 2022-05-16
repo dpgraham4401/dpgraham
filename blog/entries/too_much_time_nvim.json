@@ -7,7 +7,7 @@
   "type": "blog",
   "url": "too_much_time_nvim",
   "content": {
-    "path": "too_much_time_nvim",
+    "path": "too_much_time_nvim.gohtml",
     "format": "html"
   }
 }

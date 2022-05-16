@@ -7,7 +7,7 @@
   "type": "blog",
   "url": "first_post",
   "content": {
-    "path": "first_post",
+    "path": "first_post.gohtml",
     "format": "text"
   }
 }
