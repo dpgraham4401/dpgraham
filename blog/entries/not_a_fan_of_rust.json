@@ -1,0 +1,13 @@
+{
+  "id": 3,
+  "title": "Not a fan of Rust",
+  "lastUpdate": "05-16-2022",
+  "date": "05-16-2022",
+  "publish": true,
+  "type": "blog",
+  "url": "not_a_fan_of_rust",
+  "content": {
+    "path": "not_a_fan_of_rust.gohtml",
+    "format": "html"
+  }
+}
