@@ -57,14 +57,15 @@
       <nav class="navbar navbar-dark">
         <div class="container-fluid">
           <button id="nav_btn"
-                  class="rounded-circle bg-gradient navbar-toggler mx-3 pt-2 text-dark"
+                  class="bg-teal rounded-circle bg-gradient navbar-toggler text-dark"
                   type="button"
                   onclick="show()"
                   data-bs-toggle="collapse"
                   data-bs-target="#navbarToggleExternalContent"
                   aria-controls="navbarToggleExternalContent"
                   aria-expanded="false" aria-label="Toggle navigation">
-            <span><h1 id="nav_icon" class="fa-solid fa-bars"></h1></span>
+            <span id="nav_icon"
+                  class="fs-1 p-1 fa-solid fa-bars"></span>
           </button>
           <script>
             function show() {
@@ -86,8 +87,7 @@
         {{ template "main" . }}
     </div>
   </main>
-  <footer class="bg-gradient p-4 text-center mt-auto"
-          style="background-color: #1fafa8">
+  <footer class="bg-gradient p-4 text-center mt-auto bg-teal">
     <div class="container">
       <ul>
         <li class="" style="list-style-type: none">
