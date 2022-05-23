@@ -18,10 +18,16 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	} else if r.URL.Path != "/" {
 		errorHandler(w, http.StatusNotFound)
 	} else {
-		allArticles := loadArticles()
+		allArticles, err := loadArticles()
+		if err != nil {
+			errorHandler(w, http.StatusInternalServerError)
+		}
 		allArticles.Articles = allArticles.Articles[:3]
 		for i := range allArticles.Articles {
-			allArticles.Articles[i].loadContent()
+			err := allArticles.Articles[i].loadContent()
+			if err != nil {
+				errorHandler(w, http.StatusInternalServerError)
+			}
 		}
 		p := bluemonday.StripTagsPolicy()
 		for i := range allArticles.Articles {
@@ -37,7 +43,10 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		errorHandler(w, http.StatusMethodNotAllowed)
 	}
-	allArticles := loadArticles()
+	allArticles, err := loadArticles()
+	if err != nil {
+		errorHandler(w, http.StatusInternalServerError)
+	}
 	var art Article
 	if r.URL.Path == "/blog/" {
 		allArticles.renderTemplate(w, views.Blogs)
@@ -51,7 +60,10 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 		if !art.Publish {
 			errorHandler(w, http.StatusNotFound)
 		} else {
-			art.loadContent()
+			err := art.loadContent()
+			if err != nil {
+				errorHandler(w, http.StatusInternalServerError)
+			}
 			art.renderTemplate(w, views.Blog)
 		}
 	}

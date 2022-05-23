@@ -5,7 +5,10 @@ import (
 )
 
 func TestLoadArticles(t *testing.T) {
-	articles := loadArticles()
+	articles, err := loadArticles()
+	if err != nil {
+		t.Errorf("%s", err.Error())
+	}
 	articleDates := make([]string, len(articles.Articles))
 	for _, a := range articles.Articles {
 		articleDates = append(articleDates, a.Date)
