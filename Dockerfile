@@ -1,6 +1,9 @@
 FROM golang:1.17-alpine AS build
-RUN mkdir /app
-ADD . /app
-WORKDIR /app
+RUN mkdir /src
+ADD . /src
+WORKDIR /src
 RUN go build -o dpgraham .
-CMD ["/app/dpgraham"]
+
+FROM alpine:latest AS production
+COPY --from=build /src .
+CMD ["./dpgraham"]
