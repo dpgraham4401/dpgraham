@@ -1,13 +1,13 @@
 {
   "id": 3,
-  "title": "Not a fan of Rust",
+  "title": "Not Rust's Biggest Fan",
   "lastUpdate": "05-16-2022",
   "date": "05-16-2022",
   "publish": true,
   "type": "blog",
-  "url": "not_a_fan_of_rust",
+  "url": "not_biggest_rust_fan",
   "content": {
-    "path": "not_a_fan_of_rust.gohtml",
+    "path": "not_biggest_rust_fan.gohtml",
     "format": "html"
   }
 }
