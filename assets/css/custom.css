@@ -9,6 +9,10 @@ a {
     text-decoration: none;
 }
 
+p {
+    text-indent: 2em;
+}
+
 a:hover {
     color: var(--diametric-red);
 }
