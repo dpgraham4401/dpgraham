@@ -1,19 +1,28 @@
 :root {
-    --light-teal: #1fafa8;
+    --dpg-teal: #1fafa8;
     --diametric-red: #af1f26;
+    --dpg-lightgray: #e6e8e8;
 }
 
 a {
-    color: var(--light-teal);
+    color: var(--dpg-teal);
     text-decoration: none;
+}
+
+p {
+    text-indent: 2em;
 }
 
 a:hover {
     color: var(--diametric-red);
 }
 
-.bg-teal {
-    background-color: var(--light-teal);
+.bg-dpg-teal {
+    background-color: var(--dpg-teal);
+}
+
+.bg-dpg-lightgray {
+    background-color: var(--dpg-lightgray);
 }
 
 .teal-link {
@@ -21,7 +30,7 @@ a:hover {
 }
 
 .teal-link:hover {
-    color: var(--light-teal);
+    color: var(--dpg-teal);
 }
 
 .dark-link {

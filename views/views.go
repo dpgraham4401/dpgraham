@@ -8,7 +8,7 @@ var Index = template.Must(template.ParseFiles(
 
 var Blogs = template.Must(template.ParseFiles(
 	"./views/base.gohtml",
-	"./views/blog_home.gohtml"))
+	"./views/blog.gohtml"))
 
 var Blog = template.Must(template.ParseFiles(
 	"./views/base.gohtml",
@@ -17,3 +17,7 @@ var Blog = template.Must(template.ParseFiles(
 var Error = template.Must(template.ParseFiles(
 	"./views/base.gohtml",
 	"./views/error.gohtml"))
+
+var About = template.Must(template.ParseFiles(
+	"./views/base.gohtml",
+	"./views/about.gohtml"))
