@@ -23,6 +23,6 @@ spec:
     spec:
       containers:
         - name: dpgraham
-          image: dpgraham4401/dpgraham:v0.1.6
+          image: dpgraham4401/dpgraham:v0.1.7
           ports:
             - containerPort: 8080

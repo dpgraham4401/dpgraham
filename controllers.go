@@ -15,6 +15,9 @@ type errorMsg struct {
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		errorHandler(w, http.StatusMethodNotAllowed)
+	} else if r.URL.Path == "/about" || r.URL.Path == "/about/" {
+		view := views.About
+		renderTemplate(w, view)
 	} else if r.URL.Path != "/" {
 		errorHandler(w, http.StatusNotFound)
 	} else {

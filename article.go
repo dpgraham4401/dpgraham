@@ -76,6 +76,12 @@ func (a Article) renderTemplate(w http.ResponseWriter, tmpl *template.Template) 
 	}
 }
 
+func renderTemplate(w http.ResponseWriter, tmpl *template.Template) {
+	err := tmpl.ExecuteTemplate(w, "base", nil)
+	if err != nil {
+		errorHandler(w, http.StatusInternalServerError)
+	}
+}
 func (a *Article) loadContent() error {
 	contentDir := "./blog/articles/"
 	fileName := contentDir + a.Content.Path
