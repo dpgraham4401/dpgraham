@@ -12,12 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get tag
-        id: tag
-        uses: dawidd6/action-get-tag@v1
-        
-      - name: Use tag
-        run: echo ${{steps.tag.outputs.tag}}
         
       - name: Install Go
         uses: actions/setup-go@v2
@@ -40,6 +34,10 @@ jobs:
     needs: test_package
     runs-on: ubuntu-latest
     steps:
+      - name: Get tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+    
       - name: Checkout
         uses: actions/checkout@v2
 
