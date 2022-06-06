@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: danielr1996/kubectl-action@1.0.0
-        name: Deploy
+        name: test_kube
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           args: get nodes
