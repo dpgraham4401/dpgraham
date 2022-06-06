@@ -34,9 +34,6 @@ jobs:
     needs: test_package
     runs-on: ubuntu-latest
     steps:
-      - name: Get tag
-        id: tag
-        uses: dawidd6/action-get-tag@v1
     
       - name: Checkout
         uses: actions/checkout@v2
@@ -65,6 +62,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          # tags: dpgraham4401/dpgraham:latest
-          tags: ${{steps.tag.outputs.tag}}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
