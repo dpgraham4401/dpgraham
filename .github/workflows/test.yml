@@ -11,7 +11,7 @@ on:
       - '*'
 
 jobs:
-  test_package:
+  test_kubeconfig:
     runs-on: ubuntu-latest
 
     steps:
