@@ -1,0 +1,19 @@
+# name: use Kubeconfig
+# # Run go test when commits are pushed to any branch 
+# #  or there's a pull request to main
+
+# on:
+#   push:
+#     branches: 
+#       - '*'
+
+# jobs:
+#   test_package:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: danielr1996/kubectl-action@1.0.0
+#         name: test_kube
+#         with:
+#           kubeconfig: ${{ secrets.KUBE_CONFIG }}
+#           args: set image -n dpgraham deployments.apps/dpgraham dpgraham=dpgraham4401/dpgraham:v0.1.8
