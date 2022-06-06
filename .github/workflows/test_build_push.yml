@@ -66,11 +66,11 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
 
-  deply_new_image:
+  deploy_new_image:
     needs: build_docker_image
     runs-on: ubuntu-latest
     steps:
-    
+
       - name: Checkout
         uses: actions/checkout@v2
 
