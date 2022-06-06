@@ -1,4 +1,4 @@
-name: Run tests
+name: Test kubeconfig
 # Run go test when commits are pushed to any branch 
 #  or there's a pull request to main
 
@@ -8,26 +8,20 @@ on:
       - '*'
   pull_request:
     branches:
-      - 'main'
+      - '*'
 
 jobs:
   test_package:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Go
-        uses: actions/setup-go@v2
+        name: nodes
+      - uses: danielr1996/kubectl-action@1.0.0
         with:
-          go-version: 1.16.4
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          args: get nodes
 
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Fetch required Go modules
-        run:  go mod download
-
-      - name: Build
-        run:  go build -v ./...
-
-      - name: Run functional tests
-        run:  go test -v ./...
+      # - name: Install Go
+      #   uses: actions/setup-go@v2
+      #   with:
+      #     go-version: 1.16.4
