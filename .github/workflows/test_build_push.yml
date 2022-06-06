@@ -64,3 +64,25 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+
+  deply_new_image:
+    needs: build_docker_image
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: dpgraham4401/dpgraham
+
+      - uses: danielr1996/kubectl-action@1.0.0
+      name: test_kube
+      with:
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+        args: set image -n dpgraham deployments.apps/dpgraham dpgraham=dpgraham4401/dpgraham:${{ steps.meta.outputs.tags }}
+
