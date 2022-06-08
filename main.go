@@ -2,10 +2,14 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	_ "github.com/lib/pq"
 	"log"
+	"net/http"
 	"os"
+	"path"
+	"strconv"
 )
 
 //Db holds database connection
@@ -36,8 +40,22 @@ type Article struct {
 }
 
 func main() {
-	_, blog := getBlog(1)
-	fmt.Println(blog.Title)
+	// Routing
+	router := http.NewServeMux()
+	router.HandleFunc("/blog/", handleArticle)
+
+	log.Fatal(http.ListenAndServe(":8080", router))
+}
+
+func handleArticle(w http.ResponseWriter, r *http.Request) {
+	var err error
+	switch r.Method {
+	case "GET":
+		err = articleHandleGet(w, r)
+	}
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func CheckError(err error) {
@@ -46,14 +64,27 @@ func CheckError(err error) {
 	}
 }
 
-func getBlog(id int) (error, Article) {
+func getArticle(id int) (Article, error) {
 	blog := Article{}
 	err := Db.QueryRow("SELECT * FROM article WHERE id = $1", id).Scan(
 		&blog.Id, &blog.Title, &blog.LastUpdate, &blog.Published,
 		&blog.ArticleType, &blog.CreateDate, &blog.Content)
 	if err != nil {
-		fmt.Println(err)
-		return nil, blog
+		return blog, err
 	}
-	return nil, blog
+	return blog, nil
+}
+
+func articleHandleGet(w http.ResponseWriter, r *http.Request) (err error) {
+	blogId, _ := strconv.Atoi(path.Base(r.URL.Path))
+	blog, _ := getArticle(blogId)
+	output, err := json.Marshal(blog)
+	w.Header().Set("Content-Type", "application/json")
+	_, err = w.Write(output)
+	if err != nil {
+		return err
+	}
+	fmt.Println(blog.Title)
+
+	return nil
 }
